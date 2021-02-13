@@ -1,0 +1,97 @@
+{% extends "lessons/base_template.html" %}
+
+{% block content %}
+
+  <section class='section'>
+    <div class='container'>
+      <div class="tile is-ancestor">
+
+        <div class="tile is-parent">
+          <div class="tile is-child"></div>
+        </div>
+
+        <div class="tile is-parent">
+          <div class="tile is-child">
+            <h1 class='title is-1 is-spaced has-text-centered'>Add Lesson</h1>
+
+            <form method="POST" action=''>
+              {% csrf_token %}
+
+              <div class="field">
+                <label class="label">Student</label>
+                <div class="control">
+                  <div class="select">
+                    <select name="student" id="student" required>
+                      {% for student in user.profile.student_set.all %}
+                        <option value="{{ student.id }}">{{student}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Date</label>
+                <div class="control">
+                  <input type="datetime" data-show-header=false data-date-format="YYYY-MM-DD" name="date" id="date" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Duration</label>
+                <div class="control">
+                  <input class="input" type="number" step=".5" placeholder="Duration" name="duration" id="duration" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Topic</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Topic" name="topic" id="topic" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Report</label>
+                <div class="control">
+                  <textarea class="textarea" placeholder="How did the lesson go?" name="report" id="report" required></textarea>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="control">
+                  <button class="button is-link" type="submit">Submit</button>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+
+        <div class="tile is-parent">
+          <div class="tile is-child"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+
+    var options = {}
+    // Initialize all input of type date
+    var calendars = bulmaCalendar.attach('[type="datetime"]', options);
+
+    // To access to bulmaCalendar instance of an element
+    var element = document.querySelector('#id_date');
+    if (element) {
+    	// bulmaCalendar instance is available as element.bulmaCalendar
+    	element.bulmaCalendar.on('select', function(datepicker) {
+    		console.log(datepicker.data.value());
+    	});
+    }
+  </script>
+
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "lessons/base_template.html" %}
+
+{% block content %}
+
+  <section class='section'>
+    <div class='container'>
+      <div class="tile is-ancestor">
+
+        <div class="tile is-parent">
+          <div class="tile is-child"></div>
+        </div>
+
+        <div class="tile is-parent">
+          <div class="tile is-child">
+            <h1 class='title is-1 is-spaced has-text-centered'>Login</h1>
+            <form method="post" action="{% url 'login' %}">
+              {% csrf_token %}
+
+              {% if form.errors %}
+                <p class='has-text-centered'>Your username and password didn't match. Please try again.</p>
+              {% endif %}
+
+              <div class="field">
+                <label class="label">{{ form.username.label_tag }}</label>
+                <div class="control has-icons-left">
+                  <input class='input' placeholder='Username' type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">{{ form.password.label_tag }}</label>
+                <div class="control has-icons-left">
+                  <input class='input' placeholder='Password' type="password" name="password" autocomplete="current-password" required="" id="id_password">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user-secret"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="control">
+                  <button class="button is-link" type="submit" value="login">Submit</button>
+                </div>
+              </div>
+
+              <input type="hidden" name="next" value="{{ index }}" />
+            </form>
+          </div>
+        </div>
+
+        <div class="tile is-parent">
+          <div class="tile is-child"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+{% endblock %}

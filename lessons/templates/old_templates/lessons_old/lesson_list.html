@@ -1,0 +1,51 @@
+{% extends 'lessons/base_template.html' %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+
+      <section class="section">
+        <div class="container">
+          <h1 class="title">All Lessons</h1>
+          <p class="subtitle">Use the search bar to find specific students.</p>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Student</th>
+                <th>Duration</th>
+                <th>Topic</th>
+                <th>Invoiced</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for lesson in lessons %}
+              <tr>
+                <th>{{ lesson.date }}</th>
+                <td>{{ lesson.student }}</td>
+                <td>{{ lesson.duration_in_hours }}</td>
+                <td>{{ lesson.topic }}</td>
+                <td>{{ lesson.is_invoiced }}
+                <td><a href="{% url 'lessons:view_lesson' pk=lesson.pk %}">View Lesson</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        </div>
+      </section>
+
+
+    {% else %}
+      <section class="section">
+        <div class="container">
+          <h1 class="title">Ooops!</h1>
+          <p class="subtitle">
+            You need to be logged in to view this page!
+          </p>
+        </div>
+      </section>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "lessons/base_template.html" %}
+
+{% block content %}
+
+  <section class='section'>
+    <div class='container'>
+      <div class="tile is-ancestor">
+
+        <div class="tile is-parent">
+          <div class="tile is-child"></div>
+        </div>
+
+        <div class="tile is-parent">
+          <div class="tile is-child">
+            <h1 class='title is-1 is-spaced has-text-centered'>Generate Invoice</h1>
+
+            <form method="POST" action=''>
+              {% csrf_token %}
+
+              <div class="field">
+                <label class="label">Group</label>
+                <div class="control">
+                  <div class="select">
+                    <select name="group" id="group" required>
+                      {% for group in user.profile.group_set.all %}
+                        <option value="{{ group.id }}">{{ group }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="control">
+                  <button class="button is-link" type="submit">Submit</button>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+
+        <div class="tile is-parent">
+          <div class="tile is-child"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+{% endblock %}

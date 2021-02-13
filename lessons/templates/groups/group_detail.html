@@ -1,0 +1,96 @@
+{% extends 'general/authenticated_template.html' %}
+
+{% block content %}
+
+<section class="hero is-hero-bar">
+  <div class="hero-body">
+    <div class="level">
+      <div class="level-left">
+        <div class="level-item"><h1 class="title">View Lesson</h1></div>
+      </div>
+      <div class="level-right" style="display: none;">
+        <div class="level-item"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-title-bar">
+  <div class="level">
+    <div class="level-left">
+      <div class="level-item">
+        <ul>
+          <li>{{user.username}}</li>
+          <li>Lessons</li>
+          <li>{{ lesson.student }} - {{ lesson.date }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="level-right">
+      <div class="level-item">
+        <div class="buttons is-right">
+          <a href="{% url 'lessons:view_lessons'%}" class="button is-danger">
+            <span class="icon"><i class="mdi mdi-pen"></i></span>
+            <span>Edit Lesson</span>
+          </a>
+          <a href="{% url 'lessons:view_lessons'%}" class="button is-info">
+            <span class="icon"><i class="mdi mdi-keyboard-backspace"></i></span>
+            <span>Back to Lessons</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-main-section">
+  <div class="card has-mobile-sort-spaced">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+        Lesson Details
+      </p>
+    </header>
+      <div class="card-content">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img src="https://avatars.dicebear.com/v2/initials/{{lesson.student.name}}.svg" alt="Placeholder image">
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-4">{{lesson.topic}}</p>
+          <p class="subtitle is-6">{{lesson.date}}</p>
+        </div>
+      </div>
+
+      <div class="content">
+        {{lesson.report}}
+      </div>
+    </div>
+    <footer class="card-footer">
+       <p class="card-footer-item">
+         <span>
+           <b>{{ lesson.duration_in_hours }}</b>hrs
+         </span>
+       </p>
+       <p class="card-footer-item">
+         <span>
+           Invoiced? {% if lesson.is_invoiced %}
+           <span class="icon"><i class="mdi mdi-check"></i></span>
+           {% else %}
+             <span class="icon"><i class="mdi mdi-close"></i></span>
+             {% endif %}
+         </span>
+       </p>
+       <p class="card-footer-item">
+         <span>
+           £{{lesson.student.rate_per_hour}}ph
+         </span>
+       </p>
+     </footer>
+  </div>
+
+</section>
+
+{% endblock %}

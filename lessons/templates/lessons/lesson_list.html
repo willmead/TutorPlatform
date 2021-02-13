@@ -1,0 +1,159 @@
+{% extends 'general/authenticated_template.html' %}
+
+{% block content %}
+
+<section class="hero is-hero-bar">
+  <div class="hero-body">
+    <div class="level">
+      <div class="level-left">
+        <div class="level-item"><h1 class="title">Lessons</h1></div>
+      </div>
+      <div class="level-right" style="display: none;">
+        <div class="level-item"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-title-bar">
+  <div class="level">
+    <div class="level-left">
+      <div class="level-item">
+        <ul>
+          <li>{{user.username}}</li>
+          <li>Lessons</li>
+        </ul>
+      </div>
+    </div>
+    <div class="level-right">
+      <div class="level-item">
+        <div class="buttons is-right">
+          <a href="{% url 'lessons:add_lesson' %}" class="button is-primary">
+            <span class="icon"><i class="mdi mdi-plus"></i></span>
+            <span>Add Lesson</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-main-section">
+
+  <div class="card has-table has-mobile-sort-spaced">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+        Recent Lessons
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="b-table has-pagination">
+        <div class="table-wrapper has-mobile-cards">
+          <table class="table is-fullwidth is-striped is-hoverable is-sortable is-fullwidth">
+            <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Group</th>
+              <th>Topic(s)</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for lesson in user.profile.lesson_set.all %}
+              {% if lesson.is_invoiced == False %}
+              <tr>
+                <td class="is-image-cell">
+                  <div class="image">
+                    <img src="https://avatars.dicebear.com/v2/initials/{{lesson.student.name}}.svg" class="is-rounded">
+                  </div>
+                </td>
+                <td data-label="Name">{{ lesson.student.name }}</td>
+                <td data-label="Group">{{ lesson.student.group_set.all.0 }}</td>
+                <td data-label="Topic">{{ lesson.topic }}</td>
+                <td data-label="Date">
+                  <small class="has-text-grey is-abbr-like" title="Oct 25, 2020">{{lesson.date}}</small>
+                </td>
+                <td class="is-actions-cell">
+                  <div class="buttons is-right">
+                    <a class="button is-small is-primary" type="button" href="{% url 'lessons:view_lesson' pk=lesson.pk %}">
+                      <span class="icon"><i class="mdi mdi-eye"></i></span>
+                    </a>
+                    <button class="button is-small is-danger jb-modal" data-target="sample-modal" type="button">
+                      <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              {% endif %}
+            {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card has-table has-mobile-sort-spaced">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+        Invoiced Lessons
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="b-table has-pagination">
+        <div class="table-wrapper has-mobile-cards">
+          <table class="table is-fullwidth is-striped is-hoverable is-sortable is-fullwidth">
+            <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Group</th>
+              <th>Topic(s)</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for lesson in user.profile.lesson_set.all %}
+              {% if lesson.is_invoiced %}
+              <tr>
+                <td class="is-image-cell">
+                  <div class="image">
+                    <img src="https://avatars.dicebear.com/v2/initials/{{lesson.student.name}}.svg" class="is-rounded">
+                  </div>
+                </td>
+                <td data-label="Name">{{ lesson.student.name }}</td>
+                <td data-label="Group">{{ lesson.student.group_set.all.0 }}</td>
+                <td data-label="Topic">{{ lesson.topic }}</td>
+                <td data-label="Date">
+                  <small class="has-text-grey is-abbr-like" title="Oct 25, 2020">{{lesson.date}}</small>
+                </td>
+                <td class="is-actions-cell">
+                  <div class="buttons is-right">
+                    <a class="button is-small is-primary" type="button" href="{% url 'lessons:view_lesson' pk=lesson.pk %}">
+                      <span class="icon"><i class="mdi mdi-eye"></i></span>
+                    </a>
+                    <button class="button is-small is-danger jb-modal" data-target="sample-modal" type="button">
+                      <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              {% endif %}
+            {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+{% endblock %}

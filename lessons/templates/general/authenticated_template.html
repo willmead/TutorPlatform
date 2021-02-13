@@ -1,0 +1,190 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Organise - A Simple Tutor Platform</title>
+
+  <!-- Bulma is included -->
+  <link rel="stylesheet" type="text/css" href="{% static 'lessons/styles.css' %}">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.4/dist/css/bulma-calendar.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.4/dist/js/bulma-calendar.min.js"></script>
+
+
+  <!-- Fonts -->
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="app">
+
+  <nav id="navbar-main" class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+        <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
+      </a>
+    </div>
+    <div class="navbar-brand is-right">
+      <a class="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
+        <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
+      </a>
+    </div>
+    <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
+          <a class="navbar-link is-arrowless">
+            <div class="is-user-avatar">
+              <img src="https://avatars.dicebear.com/v2/initials/'{{user.first_name}} {{user.last_name}}'.svg" alt="{{user.first_name}} {{user.last_name}}">
+            </div>
+            <div class="is-user-name"><span>{{user.first_name}} {{user.last_name}}</span></div>
+            <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
+          </a>
+          <div class="navbar-dropdown">
+            <a href="{% url 'lessons:profile' %}" class="navbar-item">
+              <span class="icon"><i class="mdi mdi-account"></i></span>
+              <span>My Profile</span>
+            </a>
+          </div>
+        </div>
+        <a title="Log out" class="navbar-item is-desktop-icon-only" href="{% url 'logout'%}?next={{request.path}}">
+          <span class="icon"><i class="mdi mdi-logout"></i></span>
+          <span>Log out</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <aside class="aside is-placed-left is-expanded">
+    <div class="aside-tools">
+      <div class="aside-tools-label">
+        <span><b>Organise</b> For Tutors</span>
+      </div>
+    </div>
+    <div class="menu is-menu-main">
+      <p class="menu-label">General</p>
+      <ul class="menu-list">
+        <li>
+          <a href="{% url 'lessons:index' %}" class="{% if request.resolver_match.url_name == 'index' %}is-active router-link-active{% endif %} has-icon">
+            <span class="icon"><i class="mdi mdi-desktop-mac"></i></span>
+            <span class="menu-item-label">Dashboard</span>
+          </a>
+        </li>
+      </ul>
+      <p class="menu-label">Tools</p>
+      <ul class="menu-list">
+        <li>
+          <a href="{% url 'lessons:view_lessons' %}" class="{% if request.resolver_match.url_name == 'view_lessons' or request.resolver_match.url_name == 'add_lesson' or request.resolver_match.url_name == 'view_lesson' %}is-active router-link-active{% endif %} has-icon">
+            <span class="icon"><i class="mdi mdi-table"></i></span>
+            <span class="menu-item-label">Lessons</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'lessons:view_invoices' %}" class="{% if request.resolver_match.url_name == 'view_invoices' or request.resolver_match.url_name == 'add_invoice' or request.resolver_match.url_name == 'view_invoice' %}is-active router-link-active{% endif %}has-icon">
+            <span class="icon"><i class="mdi mdi-square-edit-outline"></i></span>
+            <span class="menu-item-label">Invoices</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'lessons:view_students' %}" class="{% if request.resolver_match.url_name == 'view_students' or request.resolver_match.url_name == 'add_student' or request.resolver_match.url_name == 'view_student' %}is-active router-link-active{% endif %}has-icon">
+            <span class="icon"><i class="mdi mdi-account-circle"></i></span>
+            <span class="menu-item-label">Students</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'lessons:view_groups' %}" class="{% if request.resolver_match.url_name == 'view_groups' or request.resolver_match.url_name == 'add_group' or request.resolver_match.url_name == 'view_group' %}is-active router-link-active{% endif %}has-icon">
+            <span class="icon"><i class="mdi mdi-account-circle"></i></span>
+            <span class="menu-item-label">Groups</span>
+          </a>
+        </li>
+        <li>
+          <a class="has-icon has-dropdown-icon">
+            <span class="icon"><i class="mdi mdi-view-list"></i></span>
+            <span class="menu-item-label">Submenus</span>
+            <div class="dropdown-icon">
+              <span class="icon"><i class="mdi mdi-plus"></i></span>
+            </div>
+          </a>
+          <ul>
+            <li>
+              <a href="#void">
+                <span>Sub-item One</span>
+              </a>
+            </li>
+            <li>
+              <a href="#void">
+                <span>Sub-item Two</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p class="menu-label">About</p>
+      <ul class="menu-list">
+        <li>
+          <a href="{% url 'lessons:help' %}" class="has-icon">
+            <span class="icon"><i class="mdi mdi-credit-card-outline"></i></span>
+            <span class="menu-item-label">Help</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'lessons:about' %}" class="has-icon">
+            <span class="icon"><i class="mdi mdi-help-circle"></i></span>
+            <span class="menu-item-label">About</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  {% block content %}
+  {% endblock %}
+
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item">
+            © 2021, Organise
+          </div>
+        </div>
+        <div class="level-right">
+          <div class="level-item">
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<div id="sample-modal" class="modal">
+  <div class="modal-background jb-modal-close"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Confirm action</p>
+      <button class="delete jb-modal-close" aria-label="close"></button>
+    </header>
+    <section class="modal-card-body">
+      <p>This will permanently delete <b>Some Object</b></p>
+      <p>This is sample modal</p>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button jb-modal-close">Cancel</button>
+      <button class="button is-danger jb-modal-close">Delete</button>
+    </footer>
+  </div>
+  <button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+</div>
+
+<!-- Scripts below are for demo only -->
+<script type="text/javascript" src="{% static 'lessons/main.js' %}"></script>
+
+<!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
+</body>
+</html>

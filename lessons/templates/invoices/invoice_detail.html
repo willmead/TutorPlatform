@@ -1,0 +1,138 @@
+{% extends 'general/authenticated_template.html' %}
+
+{% block content %}
+
+<section class="hero is-hero-bar">
+  <div class="hero-body">
+    <div class="level">
+      <div class="level-left">
+        <div class="level-item"><h1 class="title">View Invoice</h1></div>
+      </div>
+      <div class="level-right" style="display: none;">
+        <div class="level-item"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-title-bar">
+  <div class="level">
+    <div class="level-left">
+      <div class="level-item">
+        <ul>
+          <li>{{user.username}}</li>
+          <li>Invoices</li>
+          <li>{{ invoice.group }} - {{ invoice.date }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="level-right">
+      <div class="level-item">
+        <div class="buttons is-right">
+          <a href="{% url 'lessons:view_invoices'%}" class="button is-info">
+            <span class="icon"><i class="mdi mdi-keyboard-backspace"></i></span>
+            <span>Back to Invoices</span>
+          </a>
+          <a href="{% url 'lessons:pay_invoice' invoice.pk %}" onclick="pay_invoice()" class="button is-primary">
+            <span class="icon"><i class="mdi mdi-pen"></i></span>
+            <span>Pay Invoice</span>
+          </a>
+          <a href="{% url 'lessons:view_invoices' %}" class="button is-danger">
+            <span class="icon"><i class="mdi mdi-delete"></i></span>
+            <span>Delete Invoice</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-main-section">
+  <div class="card has-table has-mobile-sort-spaced">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+        Lessons
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="b-table has-pagination">
+        <div class="table-wrapper has-mobile-cards">
+          <table class="table is-fullwidth is-striped is-hoverable is-sortable is-fullwidth">
+            <thead>
+            <tr>
+              <th></th>
+              <th>Date</th>
+              <th>Student</th>
+              <th>Duration (Hours)</th>
+              <th>Rate (Per Hour)</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for lesson in invoice.lessons.all %}
+              <tr>
+                <td class="is-image-cell">
+                  <div class="image">
+                    <img src="https://avatars.dicebear.com/v2/initials/{{lesson.student.name}}.svg" class="is-rounded">
+                  </div>
+                </td>
+                <td data-label="Date">{{ lesson.date }}</td>
+                <td data-label="Student">{{ lesson.student.name }}</td>
+                <td data-label="Duration">{{ lesson.duration_in_hours }}</td>
+                <td data-label="Rate">£{{ lesson.student.rate_per_hour }}</td>
+                <td data-label="Total">£{{ lesson.total }}</td>
+                <td class="is-actions-cell">
+                  <div class="buttons is-right">
+                    <a class="button is-small is-primary" type="button" href="{% url 'lessons:view_lesson' pk=lesson.pk %}">
+                      <span class="icon"><i class="mdi mdi-eye"></i></span>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><b>Final Total</b></td>
+              <td data-label="Final Total"><b>£{{ invoice.total }}</b></td>
+              <td></td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card has-mobile-sort-spaced">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+        Reports
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        {% for lesson in invoice.lessons.all %}
+          <h1 class="title">{{ lesson.student.name }}</h1>
+          <h3 class="subtitle">{{ lesson.date }}</h3>
+          <p>{{ lesson.report }}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  function pay_invoice() {
+    console.log("Hello World");
+  }
+</script>
+
+{% endblock %}

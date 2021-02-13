@@ -1,0 +1,64 @@
+{% extends 'lessons/base_template.html' %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+
+      <section class="section">
+        <div class="container">
+          <h1 class="title is-1">Invoice</h1>
+          <p class="subtitle">{{ invoice.date }}</p>
+          <br>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Student</th>
+                <th>Duration</th>
+                <th>Rate</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for lesson in invoice.lessons.all %}
+              <tr>
+                <th>{{ lesson.date }}</th>
+                <td>{{ lesson.student }}</td>
+                <td>{{ lesson.duration_in_hours }}</td>
+                <td>£{{ lesson.student.rate_per_hour }}</td>
+                <td>£{{ lesson.total }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Final Total</th>
+                <th>{{ invoice.total }}</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <h1 class="title is-1">Reports</h1>
+          <p class="subtitle">{{ invoice.date }}</p>
+
+          <br>
+
+          {% for lesson in invoice.lessons.all %}
+            <h3 class="title is-3">{{ lesson.student }} ({{ lesson.date|date:'d/m' }} - {{ lesson.duration_in_hours }} hrs)</h3>
+            <p>{{ lesson.report }}</p>
+            <br>
+          {% endfor %}
+        </div>
+      </section>
+
+    {% endif %}
+
+{% endblock %}
