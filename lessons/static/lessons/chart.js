@@ -10,7 +10,7 @@ const randomChartData = n => {
 
 
 const monthlyData = n => {
-  console.log("test");
+  console.log(monthly_earnings);
   var result = JSON.parse(monthly_earnings);
 
   console.log(result);
