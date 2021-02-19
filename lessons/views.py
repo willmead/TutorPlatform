@@ -157,6 +157,7 @@ class ProfileView(LoginRequiredMixin, generic.TemplateView):
         context.update({'total_earned': get_total_earned(self.request.user)})
         # context.update({'monthly_earnings_json': get_all_monthly_earnings(self.request.user)})
         context.update({'monthly_earnings': get_total_earned(self.request.user)})
+        context.update({'test': 'test'})
 
         return context
 
