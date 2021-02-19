@@ -10,15 +10,12 @@ const randomChartData = n => {
 
 
 const monthlyData = n => {
-  console.log(monthly_earnings);
   var result = JSON.parse(monthly_earnings);
-
-  console.log(result);
 
   var values = Object.keys(result).map(function(key){
     return result[key];
   });
-  console.log(values)
+
   return values;
 
 }
