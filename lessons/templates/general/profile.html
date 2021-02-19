@@ -276,7 +276,7 @@
    <header class="card-header">
      <p class="card-header-title">
        <span class="icon"><i class="mdi mdi-finance"></i></span>
-       Performance
+       {{monthly_earnings_json}}
      </p>
      <a href="#" class="card-header-icon">
        <span class="icon"><i class="mdi mdi-reload"></i></span>
@@ -305,7 +305,7 @@
 
   console.log("Printing Data");
   console.log({{monthly_earnings_json}});
-  var monthly_earnings = '{{ monthly_earnings_json }}';
+  var monthly_earnings = '{{ monthly_earnings_json|escapejs }}';
   console.log(monthly_earnings)
 
 </script>
