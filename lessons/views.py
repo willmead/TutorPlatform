@@ -153,6 +153,7 @@ class ProfileView(LoginRequiredMixin, generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context.update({'monthly_earnings': get_total_earned(self.request.user)})
         context.update({'hours_taught': get_total_hours(self.request.user)})
         context.update({'total_earned': get_total_earned(self.request.user)})
         # context.update({'monthly_earnings_json': get_all_monthly_earnings(self.request.user)})
