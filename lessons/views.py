@@ -1,4 +1,5 @@
 from datetime import date, datetime
+import json
 
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -18,6 +19,15 @@ def get_total_earned(user):
 
 def get_monthly_earnings(user):
     return sum([lesson.duration_in_hours * lesson.student.rate_per_hour for lesson in user.profile.lesson_set.all() if lesson.date.month == datetime.now().month])
+
+
+def get_all_monthly_earnings(user):
+    monthly_earnings = {}
+    for month in range(1, 13):
+        earnings = sum([lesson.duration_in_hours * lesson.student.rate_per_hour for lesson in user.profile.lesson_set.all() if lesson.date.month == month])
+        monthly_earnings[month] = earnings
+    print(monthly_earnings)
+    return monthly_earnings
 
 
 class IndexView(LoginRequiredMixin, generic.TemplateView):
@@ -144,6 +154,7 @@ class ProfileView(LoginRequiredMixin, generic.TemplateView):
         context = super().get_context_data(**kwargs)
         context.update({'hours_taught': get_total_hours(self.request.user)})
         context.update({'total_earned': get_total_earned(self.request.user)})
+        context.update({'monthly_earnings_json': json.dumps(get_all_monthly_earnings(self.request.user))})
         return context
 
 
