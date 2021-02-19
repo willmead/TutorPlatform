@@ -27,7 +27,8 @@ def get_all_monthly_earnings(user):
     for month in range(1, 13):
         earnings = sum([lesson.duration_in_hours * lesson.student.rate_per_hour for lesson in user.profile.lesson_set.all() if lesson.date.month == month])
         monthly_earnings[month] = earnings
-    return monthly_earnings
+    # return monthly_earnings
+    return 10
 
 
 class IndexView(LoginRequiredMixin, generic.TemplateView):
