@@ -1,6 +1,5 @@
 from datetime import date, datetime
 import json
-import sys
 
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -24,7 +23,6 @@ def get_monthly_earnings(user):
 
 def get_all_monthly_earnings(user):
     monthly_earnings = {}
-    sys.stderr.write('Hello World')
 
     for month in range(1, 13):
         earnings = sum([lesson.duration_in_hours * lesson.student.rate_per_hour for lesson in user.profile.lesson_set.all() if lesson.date.month == month])
