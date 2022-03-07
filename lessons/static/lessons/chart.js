@@ -8,9 +8,19 @@ const randomChartData = n => {
   return data
 }
 
+const lastYearsMonthlyData = n => {
+  var result = JSON.parse(previous_monthly_earnings);
 
-const monthlyData = n => {
-  var result = JSON.parse(monthly_earnings);
+  var values = Object.keys(result).map(function(key){
+    return result[key];
+  });
+
+  return values;
+
+}
+
+const currentYearsMonthlyData = n => {
+  var result = JSON.parse(current_monthly_earnings);
 
   var values = Object.keys(result).map(function(key){
     return result[key];
@@ -35,7 +45,24 @@ new Chart(ctx, {
   data: {
     datasets: [
       {
-        fill: false,
+        fill: true,
+        backgroundColor: chartColors.default.info,
+        borderColor: chartColors.default.info,
+        borderWidth: 2,
+        borderDash: [],
+        borderDashOffset: 0.0,
+        pointBackgroundColor: chartColors.default.info,
+        pointBorderColor: 'rgba(255,255,255,0)',
+        pointHoverBackgroundColor: chartColors.default.info,
+        pointBorderWidth: 20,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 15,
+        pointRadius: 4,
+        data: currentYearsMonthlyData(12)
+      },
+      {
+        fill: true,
+        backgroundColor: chartColors.default.primary,
         borderColor: chartColors.default.primary,
         borderWidth: 2,
         borderDash: [],
@@ -47,7 +74,7 @@ new Chart(ctx, {
         pointHoverRadius: 4,
         pointHoverBorderWidth: 15,
         pointRadius: 4,
-        data: monthlyData(12)
+        data: lastYearsMonthlyData(12)
       },
     ],
     labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
