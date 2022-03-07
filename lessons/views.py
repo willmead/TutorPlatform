@@ -18,7 +18,7 @@ def get_total_earned(user):
 
 
 def get_monthly_earnings(user):
-    return sum([lesson.duration_in_hours * lesson.student.rate_per_hour for lesson in user.profile.lesson_set.all() if lesson.date.month == datetime.now().month])
+    return sum([lesson.duration_in_hours * lesson.student.rate_per_hour for lesson in user.profile.lesson_set.all() if (lesson.date.month == datetime.now().month) and (lesson.date.year == datetime.now().year)])
 
 
 def get_all_monthly_earnings(user):
