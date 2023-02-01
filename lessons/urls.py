@@ -17,6 +17,7 @@ urlpatterns = [
     path('invoices/<int:pk>', views.InvoiceDetailView.as_view(), name="view_invoice"),
     path('invoices/delete/<int:pk>', views.InvoiceDeleteView.as_view(), name="delete_invoice"),
     path('invoices/pay/<int:pk>', views.pay_invoice, name="pay_invoice"),
+    path('invoices/export/<int:pk>', views.export_as_json, name="export_as_json"),
 
     # Students
     path('students/', views.StudentListView.as_view(), name='view_students'),

@@ -61,7 +61,9 @@
                 <div class="select">
                   <select name="student" id="student" required>
                     {% for student in user.profile.student_set.all %}
+                      {% if not student.archived %}
                       <option value="{{ student.id }}">{{student}}</option>
+                      {% endif %}
                     {% endfor %}
                   </select>
                 </div>

@@ -61,7 +61,9 @@
                 <div class="select">
                   <select name="group" id="group" required>
                     {% for group in user.profile.group_set.all %}
+                      {% if not group.archived %}
                       <option value="{{ group.id }}">{{group}}</option>
+                      {% endif %}
                     {% endfor %}
                   </select>
                 </div>

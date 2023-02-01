@@ -25,6 +25,7 @@ class Student(models.Model):
     notes = models.TextField()
     rate_per_hour = models.IntegerField(default=50)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    archived = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -34,6 +35,7 @@ class Group(models.Model):
     name = models.CharField(max_length=256)
     students = models.ManyToManyField(Student)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    archived = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

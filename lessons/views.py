@@ -4,7 +4,8 @@ import json
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core import serializers
 
 from .models import Lesson, Student, Invoice, Group
 
@@ -139,6 +140,19 @@ def pay_invoice(request, pk):
     invoice.is_paid = True
     invoice.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def export_as_json(request, pk):
+    invoice = Invoice.objects.get(pk=pk)
+    lessons = invoice.lessons.all()
+    json_serializer = serializers.json.Serializer()
+    json_serialized = json_serializer.serialize(lessons)
+
+    response = HttpResponse(json_serialized, content_type='application/json charset=utf-8')
+
+    # add filename to response
+    response['Content-Disposition'] = 'attachment; filename="lessons.json"'
+    return response
 
 
 class GroupListView(LoginRequiredMixin, generic.ListView):

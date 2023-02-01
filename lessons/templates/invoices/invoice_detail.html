@@ -33,6 +33,10 @@
             <span class="icon"><i class="mdi mdi-keyboard-backspace"></i></span>
             <span>Back to Invoices</span>
           </a>
+          <a href="{% url 'lessons:export_as_json' invoice.pk %}" class="button is-warning">
+            <span class="icon"><i class="mdi mdi-export"></i></span>
+            <span>Export to JSON</span>
+          </a>
           <a href="{% url 'lessons:pay_invoice' invoice.pk %}" onclick="pay_invoice()" class="button is-primary">
             <span class="icon"><i class="mdi mdi-pen"></i></span>
             <span>Pay Invoice</span>
